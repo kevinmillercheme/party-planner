@@ -14,8 +14,7 @@ async function getParties() {
 
     parties = partyJSON.data;
 
-    // render();
-    console.log(parties);
+    render();
     return parties;
 }
 
@@ -26,7 +25,6 @@ async function getParty(id) {
     selectedParty = selectedPartyJSON.data;
 
     render();
-
     return selectedParty;
 }
 
@@ -36,6 +34,7 @@ function partyListItem(party) {
     li.innerHTML = `<a href=#selected>${party.name}</a>`;
 
     li.addEventListener('click', () => {
+        console.log(party);
         getParty(party.id);
     });
 
@@ -54,15 +53,33 @@ function partyList() {
 }
 
 function partyDetails() {
+    if (!selectedParty) {
+        const $p = document.createElement("p");
+        $p.textContent = "Select a party to see details.";
+        return $p;
+    }
 
+    const section = document.createElement('section');
+
+    section.innerHTML = `
+        <section class="party">
+            <h2>${selectedParty.name} #${selectedParty.id}</h2>
+            <p>${selectedParty.date}</p>
+            <p>${selectedParty.location}</p>
+            <p>${selectedParty.description}</p>
+        </section>
+    `;
+
+    return section;
 }
+
 
 function render() {
     const $app = document.querySelector("#app");
     $app.innerHTML = `
     <h1>Party Planner</h1>
     <main>
-        <section>
+        <section id="starting">
             <h2>Upcoming Parties</h2>
             <PartyList><PartyList>
         </section>
