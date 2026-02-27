@@ -14,7 +14,12 @@ async function getParties() {
 
     parties = partyJSON.data;
 
-    render();
+    try {
+        render();
+    } catch (error) {
+        console.error(error);
+    }
+        
     return parties;
 }
 
@@ -24,7 +29,12 @@ async function getParty(id) {
 
     selectedParty = selectedPartyJSON.data;
 
-    render();
+    try {
+        render();
+    } catch (error) {
+        console.error(error);
+    }
+
     return selectedParty;
 }
 
@@ -34,8 +44,11 @@ function partyListItem(party) {
     li.innerHTML = `<a href=#selected>${party.name}</a>`;
 
     li.addEventListener('click', () => {
-        console.log(party);
+        try {
         getParty(party.id);
+        } catch (error) {
+            console.error(error);
+        }
     });
 
     return li
